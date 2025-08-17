@@ -5,6 +5,7 @@ import JournalPreview from '../components/JournalPreview.jsx';
 import QuoteOfTheDay from '../components/QuoteOfTheDay.jsx';
 import ShortcutCards from '../components/ShortcutCards.jsx';
 
+
 export default function HomePage() {
   return (
     <div className="min-h-screen">
