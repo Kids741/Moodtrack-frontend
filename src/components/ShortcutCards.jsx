@@ -9,7 +9,7 @@ export default function ShortcutCards() {
       icon: Plus,
       color: "from-indigo-400 to-purple-400",
       bgColor: "from-indigo-50 to-purple-50",
-      path: "/mood-tracker"
+  path: "/logmood"
     },
     {
       title: "Open Journal",
