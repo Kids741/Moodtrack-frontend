@@ -1,4 +1,4 @@
-import NavigationBar from '../components/NavigationBar.jsx';
+// import NavigationBar from '../components/NavigationBar.jsx';
 import WelcomeSection from '../components/WelcomeSection.jsx';
 import MoodTrackerPreview from '../components/MoodTrackerPreview.jsx';
 import JournalPreview from '../components/JournalPreview.jsx';
@@ -9,8 +9,6 @@ import ShortcutCards from '../components/ShortcutCards.jsx';
 export default function HomePage() {
   return (
     <div className="min-h-screen">
-      <NavigationBar />
-      
       <main className="pt-20 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="space-y-8">
           <WelcomeSection />

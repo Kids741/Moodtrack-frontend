@@ -9,6 +9,8 @@ import MoodTrackerPage from "./pages/MoodTrackerPage.jsx";
 import JournalPage from "./pages/JournalPage.jsx";
 import ChatbotPage from "./pages/ChatbotPage.jsx";
 import SettingsPage from "./pages/SettingsPage.jsx";
+import LogMoodPage from "./pages/LogMoodPage.jsx";
+import TherapistsPage from "./pages/TherapistsPage.jsx";
 
 import "./index.css";
 
@@ -18,11 +20,13 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <HomePage /> },
-      { path: "/login", element: <LoginPage /> },
-      { path: "/mood-tracker", element: <MoodTrackerPage /> },
-      { path: "/journal", element: <JournalPage /> },
-      { path: "/chatbot", element: <ChatbotPage /> },
-      { path: "/settings", element: <SettingsPage /> },
+  { path: "/login", element: <LoginPage /> },
+  { path: "/logmood", element: <LogMoodPage /> },
+  { path: "/mood-tracker", element: <MoodTrackerPage /> },
+  { path: "/journal", element: <JournalPage /> },
+  { path: "/chatbot", element: <ChatbotPage /> },
+  { path: "/settings", element: <SettingsPage /> },
+  { path: "/therapists", element: <TherapistsPage /> },
     ],
   },
 ]);

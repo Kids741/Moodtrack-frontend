@@ -1,10 +1,15 @@
-import { Outlet } from 'react-router-dom';
+// src/App.jsx
+import { Outlet } from "react-router-dom";
+import Therapists from "./pages/Therapists";
 
-export default function App() {
+import NavigationBar from "./components/NavigationBar.jsx"
+function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-sky-50">
-      {/* This is where your current page will be rendered */}
+    <>
+      <NavigationBar />
       <Outlet />
-    </div>
+    </>
   );
 }
+
+export default App;

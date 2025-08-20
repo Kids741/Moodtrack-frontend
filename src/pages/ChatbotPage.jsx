@@ -1,117 +1,94 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 
-export default function ChatbotPage() {
-  const [messages, setMessages] = useState(() => {
-    // Load chat history from localStorage
-    const saved = localStorage.getItem("chatHistory");
-    return saved ? JSON.parse(saved) : [{ sender: "bot", text: "Hey there 👋 How’s your day going so far?" }];
-  });
+function ChatbotPage() {
+  const [messages, setMessages] = useState([
+    { sender: "bot", text: "Hi, I’m your wellbeing buddy! How are you feeling today?" },
+  ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [context, setContext] = useState({ mood: null });
 
-  // Save chat history on every message
-  useEffect(() => {
-    localStorage.setItem("chatHistory", JSON.stringify(messages));
-  }, [messages]);
+  // Rule-based chatbot with context
+  const getBotResponse = (message) => {
+    let lowerMsg = message.toLowerCase();
 
-  const sendMessage = (text) => {
-    if (!text.trim()) return;
+    if (!context.mood) {
+      if (lowerMsg.includes("sad") || lowerMsg.includes("down")) {
+        setContext({ ...context, mood: "sad" });
+        return "I’m sorry you’re feeling sad 💙. Would you like me to share some uplifting tips or connect you with a therapist?";
+      }
+      if (lowerMsg.includes("happy") || lowerMsg.includes("good")) {
+        setContext({ ...context, mood: "happy" });
+        return "That’s wonderful to hear! 🌟 Keep up the positive vibes. Would you like a motivational quote?";
+      }
+      return "Thanks for sharing. Could you tell me a bit more about how you’re feeling?";
+    }
 
-    // Add user message
-    setMessages((prev) => [...prev, { sender: "user", text }]);
+    // Contextual responses
+    if (context.mood === "sad") {
+      if (lowerMsg.includes("therapist")) {
+        return "You can connect with a therapist from the therapists page in the menu.";
+      }
+      return "It’s okay to feel low sometimes. Remember, small steps matter 💪. Want me to suggest some quick self-care ideas?";
+    }
+
+    if (context.mood === "happy") {
+      if (lowerMsg.includes("yes")) {
+        return "✨ 'Happiness is not something ready-made. It comes from your own actions.' - Dalai Lama";
+      }
+      return "Keep enjoying your day! 😊";
+    }
+
+    return "I’m here for you, always. 💙";
+  };
+
+  const handleSend = () => {
+    if (!input.trim()) return;
+
+    const userMessage = { sender: "user", text: input };
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
+
+    // Bot typing effect
     setIsTyping(true);
-
-    // Fake bot response delay
     setTimeout(() => {
-      let reply = getBotReply(text);
-      setMessages((prev) => [...prev, { sender: "bot", text: reply }]);
+      const botMessage = { sender: "bot", text: getBotResponse(input) };
+      setMessages((prev) => [...prev, botMessage]);
       setIsTyping(false);
-    }, 1000);
+    }, 1200);
   };
-
-  const getBotReply = (userText) => {
-    const lower = userText.toLowerCase();
-
-    if (lower.includes("mood")) {
-      return "Got it! 🌈 You can log your mood on the Mood Tracker page.";
-    }
-    if (lower.includes("journal")) {
-      return "Of course! 📓 Your journal is ready to accept your thoughts.";
-    }
-    if (lower.includes("breathing")) {
-      return "🫁 Try this: Inhale deeply for 4 seconds, hold for 7, and exhale for 8 seconds.";
-    }
-
-    // Random small talk
-    const replies = [
-      "I hear you ❤️. Tell me more.",
-      "Hmm 🤔 that’s interesting…",
-      "Thanks for sharing 💬",
-      "You’re doing great, keep going! 💪",
-    ];
-    return replies[Math.floor(Math.random() * replies.length)];
-  };
-
-  const quickReplies = [
-    "Track my mood 🌈",
-    "Write in journal 📓",
-    "Breathing exercise 🫁",
-    "Tell me something positive 🌞",
-  ];
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Your Wellbeing Companion 🤖</h2>
+    <div className="p-4 max-w-lg mx-auto">
+      <h1 className="text-2xl font-bold mb-4 text-center">Your Wellbeing Buddy</h1>
 
-      <div className="bg-white rounded-lg shadow p-4 h-96 overflow-y-auto">
-        {messages.map((msg, i) => (
+      <div className="border rounded-lg p-4 h-96 overflow-y-auto bg-gray-50">
+        {messages.map((msg, index) => (
           <div
-            key={i}
-            className={`mb-3 flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+            key={index}
+            className={`mb-2 p-2 rounded-lg max-w-xs ${
+              msg.sender === "user"
+                ? "bg-blue-500 text-white self-end ml-auto"
+                : "bg-gray-200 text-gray-800"
+            }`}
           >
-            <div
-              className={`px-4 py-2 rounded-lg max-w-xs ${
-                msg.sender === "user"
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200 text-gray-800"
-              }`}
-            >
-              {msg.text}
-            </div>
+            {msg.text}
           </div>
         ))}
-
-        {isTyping && (
-          <div className="text-gray-500 italic">Bot is typing...</div>
-        )}
+        {isTyping && <div className="italic text-gray-500">Buddy is typing...</div>}
       </div>
 
-      {/* Quick reply buttons */}
-      <div className="flex flex-wrap gap-2 mt-4">
-        {quickReplies.map((qr, i) => (
-          <button
-            key={i}
-            onClick={() => sendMessage(qr)}
-            className="bg-gray-100 px-3 py-1 rounded-full text-sm hover:bg-gray-200"
-          >
-            {qr}
-          </button>
-        ))}
-      </div>
-
-      {/* Input field */}
-      <div className="mt-4 flex">
+      <div className="flex mt-4">
         <input
+          type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-          placeholder="Type your message..."
-          className="flex-1 border rounded-l px-3 py-2"
+          placeholder="Type a message..."
+          className="flex-grow border rounded-l-lg p-2 focus:outline-none"
         />
         <button
-          onClick={() => sendMessage(input)}
-          className="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600"
+          onClick={handleSend}
+          className="bg-blue-500 text-white px-4 rounded-r-lg hover:bg-blue-600"
         >
           Send
         </button>
@@ -119,3 +96,5 @@ export default function ChatbotPage() {
     </div>
   );
 }
+
+export default ChatbotPage;
