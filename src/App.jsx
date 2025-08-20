@@ -1,14 +1,16 @@
-// src/App.jsx
 import { Outlet } from "react-router-dom";
-import Therapists from "./pages/Therapists";
+import NavigationBar from "./components/NavigationBar.jsx";
+import Footer from "./components/Footer.jsx";
 
-import NavigationBar from "./components/NavigationBar.jsx"
 function App() {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <NavigationBar />
-      <Outlet />
-    </>
+      <div className="flex-1">
+        <Outlet />
+      </div>
+      <Footer />
+    </div>
   );
 }
 
