@@ -1,4 +1,4 @@
-# 🌙 MoodTrack
+# MoodTrack
 
 MoodTrack is a mental health app designed to help users **track moods, journal thoughts, and access supportive features** like inspirational quotes and therapy connections.  
 Built with **React + Vite**, and deployed on **Vercel**.  
@@ -6,11 +6,11 @@ Built with **React + Vite**, and deployed on **Vercel**.
 ---
 
 ## 🔗 Live Demo  
-👉 [Try MoodTrack here](https://moodtrack-frontend.vercel.app/)
+ [Try MoodTrack here](https://moodtrack-frontend.vercel.app/)
 
 ---
 
-## ✨ Features
+## Features
 - 📊 **Mood Tracking** – Log daily moods and monitor emotional trends.  
 - 📖 **Journaling** – Write and save personal reflections securely.  
 - 💬 **Community Support** – Connect with others on similar journeys.  
@@ -19,7 +19,7 @@ Built with **React + Vite**, and deployed on **Vercel**.
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 - **Frontend:** React (Vite)  
 - **Styling:** Tailwind CSS  
 - **Deployment:** Vercel  
@@ -57,3 +57,4 @@ This project is licensed under the MIT License.
 
 ---
  
+
