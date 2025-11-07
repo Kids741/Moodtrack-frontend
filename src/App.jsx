@@ -1,17 +1,24 @@
 import { Outlet } from "react-router-dom";
-import NavigationBar from "./components/NavigationBar.jsx";
-import Footer from "./components/Footer.jsx";
+import NavigationBar from "./components/NavigationBar";
+import Footer from "./components/Footer";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 
-function App() {
+
+export default function App() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-indigo-50 via-purple-50 to-sky-50">
+      {/* Navigation always visible */}
       <NavigationBar />
-      <div className="flex-1">
-        <Outlet />
-      </div>
+
+      {/* Main content (pages from routes) */}
+      <main className="flex-grow">
+        <ErrorBoundary>
+          <Outlet />
+        </ErrorBoundary>
+      </main>
+               
+      {/* Footer always visible */}
       <Footer />
     </div>
   );
 }
-
-export default App;

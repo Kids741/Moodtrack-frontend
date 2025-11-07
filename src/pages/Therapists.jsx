@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const therapists = [
+const therapistsData = [
   {
     id: 1,
     name: "Dr. Jane Doe",
@@ -24,7 +24,7 @@ const therapists = [
 export default function Therapists() {
   const [search, setSearch] = useState("");
 
-  const filteredTherapists = therapists.filter((therapist) =>
+  const filteredTherapists = therapistsData.filter((therapist) =>
     therapist.specialty.toLowerCase().includes(search.toLowerCase())
   );
 

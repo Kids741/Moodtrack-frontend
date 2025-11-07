@@ -1,4 +1,5 @@
 import { Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function WelcomeSection() {
   return (
@@ -20,10 +21,13 @@ export default function WelcomeSection() {
             <div className="text-6xl">🌸</div>
           </div>
         </div>
-        
-        <button className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
-          Start Logging
-        </button>
+
+        {/* Start Logging button navigates to login/signup */}
+        <Link to="/login">
+          <button className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
+            Start Logging
+          </button>
+        </Link>
       </div>
     </section>
   );

@@ -1,61 +1,150 @@
-import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import {
+  Home,
+  Info,
+  Contact,
+  LayoutDashboard,
+  Users,
+  Smile,
+  UserCog,
+  MessageCircle,
+  LogOut,
+  LogIn,
+  Menu,
+  X,
+} from "lucide-react";
+import { useState } from "react";
 
-export default function JournalPage() {
-  const [entry, setEntry] = useState("");
-  const [savedEntries, setSavedEntries] = useState([]);
+export default function NavigationBar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Load saved entries when the page loads
-  useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("journalEntries")) || [];
-    setSavedEntries(stored);
-  }, []);
-
-  const saveEntry = () => {
-    if (!entry.trim()) return;
-    const newEntries = [
-      { text: entry, date: new Date().toLocaleString() },
-      ...savedEntries
-    ];
-    setSavedEntries(newEntries);
-    localStorage.setItem("journalEntries", JSON.stringify(newEntries));
-    setEntry("");
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
 
-  return (
-    <div className="max-w-2xl mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-6 text-sky-600">Mood Journal</h1>
-      <textarea
-        value={entry}
-        onChange={(e) => setEntry(e.target.value)}
-        className="w-full border p-4 rounded-lg h-40 focus:outline-none focus:ring-2 focus:ring-sky-400"
-        placeholder="How are you feeling today?"
-      ></textarea>
-      <button
-        onClick={saveEntry}
-        className="mt-4 bg-sky-500 hover:bg-sky-600 text-white px-4 py-2 rounded-lg shadow"
-      >
-        Save Entry
-      </button>
+  // Navigation items based on auth status
+  const guestNav = [
+    { name: "Home", icon: Home, href: "/" },
+    { name: "About", icon: Info, href: "/about" },
+    { name: "Contact", icon: Contact, href: "/contact" },
+  ];
 
-      {/* Display saved entries */}
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">Previous Entries</h2>
-        {savedEntries.length === 0 ? (
-          <p className="text-gray-500">No entries yet.</p>
-        ) : (
-          <ul className="space-y-4">
-            {savedEntries.map((e, i) => (
-              <li
-                key={i}
-                className="border rounded-lg p-4 bg-white shadow-sm"
-              >
-                <p className="text-sm text-gray-500 mb-2">{e.date}</p>
-                <p>{e.text}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
+  const userNav = [
+    { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
+    { name: "Therapists", icon: Users, href: "/therapists" },
+    { name: "Log Mood", icon: Smile, href: "/mood" },
+    { name: "Chatbot", icon: MessageCircle, href: "/chatbot" },
+    { name: "Profile", icon: UserCog, href: "/profile" },
+  ];
+
+  const navItems = user ? userNav : guestNav;
+
+  return (
+    <>
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-indigo-100 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <Link
+              to="/"
+              className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
+            >
+              MoodTrack
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-4">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="flex items-center space-x-2 px-3 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-300"
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              })}
+
+              {!user ? (
+                <Link
+                  to="/login"
+                  className="px-4 py-2 rounded-xl text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-300 flex items-center"
+                >
+                  <LogIn className="w-4 h-4 mr-1" />
+                  Login / Sign Up
+                </Link>
+              ) : (
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center px-4 py-2 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-all duration-300"
+                >
+                  <LogOut className="w-4 h-4 mr-1" />
+                  Logout
+                </button>
+              )}
+            </div>
+
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+            >
+              {mobileMenuOpen ? <X /> : <Menu />}
+            </button>
+          </div>
+
+          {/* Mobile Navigation */}
+          {mobileMenuOpen && (
+            <div className="md:hidden mt-2 pb-4 space-y-2">
+              {navItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center space-x-2 px-3 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-300"
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span>{item.name}</span>
+                  </Link>
+                );
+              })}
+
+              {!user ? (
+                <Link
+                  to="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full text-center px-4 py-2 rounded-xl text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-300"
+                >
+                  Login / Sign Up
+                </Link>
+              ) : (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="block w-full text-center px-4 py-2 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-all duration-300"
+                >
+                  Logout
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      </nav>
+
+      {/* Sticky Spacing Fix */}
+      <div className="h-16"></div>
+    </>
   );
 }
