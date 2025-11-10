@@ -1,60 +1,129 @@
-# MoodTrack
-
-MoodTrack is a mental health app designed to help users **track moods, journal thoughts, and access supportive features** like inspirational quotes and therapy connections.  
-Built with **React + Vite**, and deployed on **Vercel**.  
-
----
-
-## 🔗 Live Demo  
- [Try MoodTrack here](https://moodtrack-frontend.vercel.app/)
-
----
-
-## Features
-- 📊 **Mood Tracking** – Log daily moods and monitor emotional trends.  
-- 📖 **Journaling** – Write and save personal reflections securely.  
-- 💬 **Community Support** – Connect with others on similar journeys.  
-- 🎯 **Quote of the Day** – Daily motivational quotes to uplift your spirit.  
-- 🧑‍⚕️ **Therapy Access** – Connect with professional support.  
-
----
-
-## Tech Stack
-- **Frontend:** React (Vite)  
-- **Styling:** Tailwind CSS  
-- **Deployment:** Vercel  
-
----
-
-## 🚀 Getting Started  
-
-Clone the repository:  
-```bash
-git clone https://github.com/Kids741/Moodtrack-frontend.git
-cd Moodtrack-frontend
-Install dependencies:
-
-npm install
+ MoodTrack
 
 
-Run locally:
+MoodTrack is a mental health web app that allows users to track moods, journal thoughts, access mental health resources, and engage with a supportive community.
 
-npm run dev
+Overview
+
+MoodTrack is a full-stack MERN app (MongoDB, Express, React + Vite, Node.js).
+
+Users can:
+
+Track daily moods and patterns
+
+Maintain private journals
+
+Access mental health resources and AI-powered suggestions
+
+Connect with a safe community for support
+
+ Technology Stack
+Layer	Technology
+Frontend	React.js, Vite, Tailwind CSS
+Backend	Node.js, Express.js
+Database	MongoDB (via Mongoose)
+Hosting	Frontend: Vercel • Backend: Render
+Version Control	Git & GitHub
+🧩 Project Structure
+MoodTrack/
+├── Frontend/          # React + Vite application (UI)
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── Backend/           # Node.js + Express API
+│   ├── src/
+│   ├── models/
+│   ├── routes/
+│   └── package.json
+│
+├── .gitignore
+└── README.md
+
+🚀 Getting Started
+1️⃣ Clone the repository
+git clone https://github.com/Kids741/MoodTrack.git
+cd MoodTrack
+
+2️⃣ Setup the Frontend
+cd Frontend
+pnpm install       
+pnpm run dev       
 
 
-Build for production:
+➡️ App runs at http://localhost:3000 
 
-npm run build
+3️⃣ Setup the Backend
+cd ../Backend
+pnpm install
+pnpm run dev
 
-📌 Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+➡️ API runs at http://localhost:5000
 
+🔐 Environment Variables
+Backend .env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+
+Frontend .env
+VITE_API_URL=http://localhost:5000
+
+✨ Features
+
+📝 Daily mood tracking
+
+📖 Personal journaling
+
+💬 Community support forum
+
+🤖 AI-powered mental health suggestions
+
+📊 Mood analytics and history
+
+🤝 Contributing
+
+We welcome contributions from developers and mental health enthusiasts!
+
+Steps to contribute:
+
+Create a new branch
+
+git checkout -b feature/<feature-name>
+
+
+Commit changes
+
+git commit -m "Add <feature-name>"
+
+
+Push and open a Pull Request
+
+git push -u origin feature/<feature-name>
+
+🔄 Branch Workflow
+Branch	Purpose
+main	Production-ready code
+dev	Active development
+feature/*	New feature or fix
+👩‍💻 Team & Contributors
+Frontend Developers
+Name	GitHub
+Dennis Kidake	@Kids741
+
+Backend Developers
+Name	GitHub
+Dennis Kidake	@Kids741
+
+Add your name	@username
+🌐 Deployment Links
+Service	URL
+Frontend (Vercel)	https://moodtrack.vercel.app
+
+Backend (Render)	Coming soon
+Database (MongoDB Atlas)	Configured privately
 📜 License
 
-This project is licensed under the MIT License.
-
-
----
- 
-
+This project is maintained by Dennis Kidake and collaborators for mental health awareness and educational purposes.
+© 2025 MoodTrack – All rights reserved.

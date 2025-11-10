@@ -13,7 +13,7 @@ function Footer() {
             &copy; {new Date().getFullYear()} MoodTrack. All rights reserved.
           </p>
           <p className="text-sm md:text-base">
-            Made with ❤️ to support your wellbeing.
+            Made with to support your wellbeing.
           </p>
         </div>
 
