@@ -29,7 +29,12 @@ const connectDB = async () => {
 connectDB();
 
 // === Middleware ===
-app.use(cors());
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // === Routes ===
