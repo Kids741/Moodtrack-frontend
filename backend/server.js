@@ -29,8 +29,25 @@ const connectDB = async () => {
 connectDB();
 
 // === Middleware ===
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+];
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || '*',
+  origin: (origin, callback) => {
+    // Allow requests with no origin (like mobile apps or Postman)
+    if (!origin) return callback(null, true);
+    
+    // Allow localhost
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    
+    // Allow all Vercel deployments
+    if (origin.includes('vercel.app')) return callback(null, true);
+    
+    // Reject others
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
   optionsSuccessStatus: 200
 };
