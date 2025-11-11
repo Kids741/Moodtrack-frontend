@@ -16,11 +16,24 @@ const app = express();
 // === MongoDB Connection ===
 const connectDB = async () => {
   const uri = process.env.MONGODB_URI || process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/moodtrack';
+  
+  if (!uri || uri === 'mongodb://127.0.0.1:27017/moodtrack') {
+    console.error("❌ MONGODB_URI is not set in environment variables!");
+    if (process.env.NODE_ENV === 'production') {
+      console.error("Cannot start in production without MongoDB URI");
+      process.exit(1);
+    }
+  }
+  
   try {
-    await mongoose.connect(uri);
-    console.log("✅ MongoDB connected");
+    await mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
+    console.log("✅ MongoDB connected successfully");
   } catch (error) {
     console.error("❌ MongoDB connection failed:", error.message);
+    console.error("URI being used:", uri.replace(/:[^:@]+@/, ':****@')); // Hide password
     // Exit if running in production and DB is required
     if (process.env.NODE_ENV === 'production') process.exit(1);
   }
