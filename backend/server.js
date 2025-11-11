@@ -6,7 +6,10 @@ import mongoose from "mongoose";
 import moodRoutes from "./routes/moodRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 
-dotenv.config();
+// Only load .env in development
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const app = express();
 
