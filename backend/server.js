@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 
 import moodRoutes from "./routes/moodRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import chatbotRoutes from "./routes/chatbot.js";
+import journalRoutes from "./routes/journalRoutes.js";
 
 // Only load .env in development
 if (process.env.NODE_ENV !== 'production') {
@@ -70,6 +72,8 @@ app.use(express.json());
 // === Routes ===
 app.use("/api/moods", moodRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/chat", chatbotRoutes);
+app.use("/api/journal", journalRoutes);
 
 // === Root Endpoint ===
 app.get("/", (req, res) => {
