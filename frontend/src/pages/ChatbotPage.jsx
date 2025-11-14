@@ -1,100 +1,88 @@
-import { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import api from "@/utils/axios";
 
-function ChatbotPage() {
-  const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hi, I’m your wellbeing buddy! How are you feeling today?" },
-  ]);
+export default function ChatbotPage() {
   const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const [context, setContext] = useState({ mood: null });
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [conversationId, setConversationId] = useState(null);
+  const bottomRef = useRef(null);
 
-  // Rule-based chatbot with context
-  const getBotResponse = (message) => {
-    let lowerMsg = message.toLowerCase();
+  const send = async () => {
+	if (!input.trim()) return;
+	const userText = input.trim();
+	setMessages((m) => [...m, { from: "user", text: userText }]);
+	setInput("");
+	setLoading(true);
 
-    if (!context.mood) {
-      if (lowerMsg.includes("sad") || lowerMsg.includes("down")) {
-        setContext({ ...context, mood: "sad" });
-        return "I’m sorry you’re feeling sad 💙. Would you like me to share some uplifting tips or connect you with a therapist?";
-      }
-      if (lowerMsg.includes("happy") || lowerMsg.includes("good")) {
-        setContext({ ...context, mood: "happy" });
-        return "That’s wonderful to hear! 🌟 Keep up the positive vibes. Would you like a motivational quote?";
-      }
-      return "Thanks for sharing. Could you tell me a bit more about how you’re feeling?";
-    }
+	try {
+	  const res = await api.post("/chat", {
+		text: userText,
+		conversationId
+	  });
 
-    // Contextual responses
-    if (context.mood === "sad") {
-      if (lowerMsg.includes("therapist")) {
-        return "You can connect with a therapist from the therapists page in the menu.";
-      }
-      return "It’s okay to feel low sometimes. Remember, small steps matter 💪. Want me to suggest some quick self-care ideas?";
-    }
-
-    if (context.mood === "happy") {
-      if (lowerMsg.includes("yes")) {
-        return "✨ 'Happiness is not something ready-made. It comes from your own actions.' - Dalai Lama";
-      }
-      return "Keep enjoying your day! 😊";
-    }
-
-    return "I’m here for you, always. 💙";
+	  const data = res.data;
+	  setConversationId(data.conversationId);
+	  setMessages((m) => [...m, { from: "bot", text: data.reply }]);
+	} catch (err) {
+	  console.error(err);
+	  const errorMsg = err.response?.data?.error || err.message || "Network error";
+	  setMessages((m) => [...m, { from: "bot", text: errorMsg }]);
+	} finally {
+	  setLoading(false);
+	}
   };
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-
-    const userMessage = { sender: "user", text: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-
-    // Bot typing effect
-    setIsTyping(true);
-    setTimeout(() => {
-      const botMessage = { sender: "bot", text: getBotResponse(input) };
-      setMessages((prev) => [...prev, botMessage]);
-      setIsTyping(false);
-    }, 1200);
+  const handleKey = (e) => {
+	if (e.key === "Enter" && !e.shiftKey) {
+	  e.preventDefault();
+	  send();
+	}
   };
+
+  useEffect(() => {
+	if (bottomRef.current) {
+	  bottomRef.current.scrollIntoView({ behavior: "smooth" });
+	}
+  }, [messages, loading]);
 
   return (
-    <div className="p-4 max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold mb-4 text-center">Your Wellbeing Buddy</h1>
+	<div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow p-4">
+	  <div className="text-xl font-semibold mb-2">Buddy</div>
 
-      <div className="border rounded-lg p-4 h-96 overflow-y-auto bg-gray-50">
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`mb-2 p-2 rounded-lg max-w-xs ${
-              msg.sender === "user"
-                ? "bg-blue-500 text-white self-end ml-auto"
-                : "bg-gray-200 text-gray-800"
-            }`}
-          >
-            {msg.text}
-          </div>
-        ))}
-        {isTyping && <div className="italic text-gray-500">Buddy is typing...</div>}
-      </div>
+	  <div className="h-64 overflow-y-auto p-2 border rounded-lg mb-3 bg-gray-50 dark:bg-gray-900">
+		{messages.map((m, i) => (
+		  <div key={i} className={`mb-2 flex ${m.from === "user" ? "justify-end" : "justify-start"}`}>
+			<div
+			  className={`max-w-[80%] p-2 rounded-xl ${
+				m.from === "user" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-900"
+			  }`}
+			>
+			  {m.text}
+			</div>
+		  </div>
+		))}
+		{loading && <div className="text-sm text-gray-500">Buddy is typing...</div>}
+		<div ref={bottomRef} />
+	  </div>
 
-      <div className="flex mt-4">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type a message..."
-          className="flex-grow border rounded-l-lg p-2 focus:outline-none"
-        />
-        <button
-          onClick={handleSend}
-          className="bg-blue-500 text-white px-4 rounded-r-lg hover:bg-blue-600"
-        >
-          Send
-        </button>
-      </div>
-    </div>
+	  <div className="flex items-center gap-2">
+		<textarea
+		  value={input}
+		  onChange={(e) => setInput(e.target.value)}
+		  onKeyDown={handleKey}
+		  placeholder="Type a message..."
+		  className="flex-1 p-2 border rounded-lg resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+		  rows={2}
+		/>
+		<button
+		  onClick={send}
+		  disabled={loading || !input.trim()}
+		  className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50"
+		>
+		  {loading ? "Sending..." : "Send"}
+		</button>
+	  </div>
+	</div>
   );
 }
-
-export default ChatbotPage;
