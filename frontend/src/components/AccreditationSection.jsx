@@ -5,11 +5,11 @@ import gdprLogo from "../assets/gdpr.png";
 
 export default function AccreditationSection(props) {
   return (
-    <section className="bg-gradient-to-r from-sky-50 to-indigo-50 py-12 px-6 rounded-3xl shadow-md mt-10">
+    <section className="bg-light-blue-100-to-r from-sky-50 to-indigo-50 py-12 px-6 rounded-3xl shadow-md mt-10">
       <div className="max-w-5xl mx-auto text-center space-y-6">
         {/* Heading */}
         <div className="flex justify-center items-center space-x-3">
-          <ShieldCheck className="text-indigo-500 w-8 h-8" />
+          <ShieldCheck className="text-blue-400 w-8 h-8" />
           <h2 className="text-2xl font-bold text-gray-800">
             Security & Accreditation
           </h2>

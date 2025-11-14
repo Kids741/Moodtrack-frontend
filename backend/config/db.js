@@ -6,9 +6,9 @@ async function connectDB() {
     await mongoose.connect(uri, {
       // useNewUrlParser and useUnifiedTopology are default in Mongoose 6+
     });
-    console.log('✅ MongoDB connected');
+    console.log('MongoDB connected');
   } catch (error) {
-    console.error('❌ MongoDB connection error:', error.message);
+    console.error('MongoDB connection error:', error.message);
     // Exit process if DB connection fails in production
     if (process.env.NODE_ENV === 'production') process.exit(1);
   }

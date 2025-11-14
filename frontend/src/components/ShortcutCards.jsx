@@ -7,24 +7,24 @@ export default function ShortcutCards() {
       title: "Log Mood",
       description: "Track how you're feeling",
       icon: Plus,
-      color: "from-indigo-400 to-purple-400",
-      bgColor: "from-indigo-50 to-purple-50",
+      color: "from-blue-400 to-indigo-400",
+      bgColor: "from-blue-50 to-light-blue-50",
       path: "#"
     },
     {
       title: "Open Journal",
       description: "Write your thoughts",
       icon: BookOpen,
-      color: "from-sky-400 to-indigo-400",
-      bgColor: "from-sky-50 to-indigo-50",
+      color: "from-sky-300 to-indigo-300",
+      bgColor: "from-sky-30 to-indigo-20",
       path: "#"
     },
     {
-      title: "Talk to Chatbot",
+      title: "Chat with Buddy AI",
       description: "Get support anytime",
       icon: MessageCircle,
-      color: "from-purple-400 to-pink-400",
-      bgColor: "from-purple-50 to-pink-50",
+      color: "from-blue-300 to-indigo-400",
+      bgColor: "from-purple-30 to-pink-20",
       path: "#"
     },
     {
@@ -32,7 +32,7 @@ export default function ShortcutCards() {
       description: "Schedule or chat with a professional",
       icon: User,
       color: "from-rose-400 to-red-400",
-      bgColor: "from-rose-50 to-red-50",
+      bgColor: "from-rose-20 to-red-15",
       path: "#"
     },
     {
@@ -40,7 +40,7 @@ export default function ShortcutCards() {
       description: "Get urgent help right now",
       icon: AlertTriangle,
       color: "from-red-500 to-orange-500",
-      bgColor: "from-red-50 to-orange-50",
+      bgColor: "from-red-30 to-orange-25",
       path: "#"
     },
     ,{
@@ -48,7 +48,7 @@ export default function ShortcutCards() {
   description: "Discover how different flowers promote calmness, joy, and emotional balance.",
   icon: Flower, 
   color: "from-pink-400 to-rose-400",
-  bgColor: "from-pink-50 to-rose-50",
+  bgColor: "from-pink-30 to-rose-25",
   path: "#" 
 }
 

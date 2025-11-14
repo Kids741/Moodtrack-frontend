@@ -7,15 +7,15 @@ export default function QuoteOfTheDay() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-purple-100 via-indigo-100 to-sky-100 rounded-2xl p-8 shadow-md hover:shadow-lg transition-all duration-300">
+    <div className="bg-light-200-blue-to-r from-blue-100 via-indigo-100 to-sky-100 rounded-2xl p-8 shadow-md hover:shadow-lg transition-all duration-300">
       <div className="max-w-4xl mx-auto text-center">
-        <Quote className="h-8 w-8 text-purple-500 mx-auto mb-4" />
+        <Quote className="h-8 w-8 text-blue-500 mx-auto mb-4" />
         
         <blockquote className="text-xl sm:text-2xl font-medium text-gray-800 mb-4 leading-relaxed">
           "{quote.text}"
         </blockquote>
         
-        <cite className="text-lg text-purple-600 font-semibold">
+        <cite className="text-lg text-blue-600 font-semibold">
           — {quote.author}
         </cite>
       </div>

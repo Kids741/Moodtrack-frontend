@@ -33,7 +33,7 @@ export default function ContactPage() {
       // 2 Send acknowledgment email to the user
       await emailjs.send(
         serviceID,
-        adminTemplateID,
+        userTemplateID,
         {
           to_name: formData.name,
           to_email: formData.email,

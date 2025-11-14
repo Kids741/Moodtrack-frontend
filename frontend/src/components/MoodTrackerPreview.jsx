@@ -16,7 +16,7 @@ export default function JournalPreview() {
         {recentEntries.map((entry, index) => (
           <div
             key={index}
-            className="border-l-4 border-indigo-400 pl-4 py-2 bg-indigo-50 rounded-md hover:bg-indigo-100 transition-colors duration-200 cursor-pointer"
+            className="border-l-4 border-blue-400 pl-4 py-1 bg-blue-50 rounded-md hover:bg-blue-100 transition-colors duration-200 cursor-pointer"
           >
             <p className="text-sm text-gray-500">{entry.date}</p>
             <p className="text-gray-700">{entry.excerpt}</p>
@@ -24,7 +24,7 @@ export default function JournalPreview() {
         ))}
       </div>
 
-      <button className="mt-6 w-full bg-gradient-to-r from-indigo-400 to-purple-400 text-white py-2 px-4 rounded-xl font-medium shadow hover:opacity-90 transition-opacity">
+      <button className="mt-6 w-full bg-gradient-to-r from-blue-300 to-indigo-300 text-white py-2 px-4 rounded-xl font-medium shadow hover:opacity-90 transition-opacity">
         View All Entries
       </button>
     </div>
