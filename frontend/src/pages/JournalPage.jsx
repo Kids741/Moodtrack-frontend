@@ -1,150 +1,95 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext";
-import {
-  Home,
-  Info,
-  Contact,
-  LayoutDashboard,
-  Users,
-  Smile,
-  UserCog,
-  MessageCircle,
-  LogOut,
-  LogIn,
-  Menu,
-  X,
-} from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import api from "@/utils/axios";
 
-export default function NavigationBar() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function JournalPage() {
+  const [entries, setEntries] = useState([]);
+  const [newEntry, setNewEntry] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  useEffect(() => {
+    document.title = "Journal | MoodTrack";
+    fetchEntries();
+  }, []);
+
+  const fetchEntries = async () => {
+    try {
+      const res = await api.get("/journal");
+      setEntries(res.data || []);
+    } catch (error) {
+      console.error("Failed to fetch journal entries:", error);
+    }
   };
 
-  // Navigation items based on auth status
-  const guestNav = [
-    { name: "Home", icon: Home, href: "/" },
-    { name: "About", icon: Info, href: "/about" },
-    { name: "Contact", icon: Contact, href: "/contact" },
-  ];
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!newEntry.trim()) return;
 
-  const userNav = [
-    { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
-    { name: "Therapists", icon: Users, href: "/therapists" },
-    { name: "Log Mood", icon: Smile, href: "/mood" },
-    { name: "Chatbot", icon: MessageCircle, href: "/chatbot" },
-    { name: "Profile", icon: UserCog, href: "/profile" },
-  ];
-
-  const navItems = user ? userNav : guestNav;
+    setLoading(true);
+    try {
+      await api.post("/journal", { content: newEntry });
+      setNewEntry("");
+      fetchEntries();
+    } catch (error) {
+      console.error("Failed to create entry:", error);
+      alert("Failed to save journal entry");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <>
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-indigo-100 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <Link
-              to="/"
-              className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
-            >
-              MoodTrack
-            </Link>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 py-12 px-4">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold text-gray-800 mb-8">My Journal</h1>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className="flex items-center space-x-2 px-3 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-300"
-                  >
-                    <Icon className="h-4 w-4" />
-                    <span>{item.name}</span>
-                  </Link>
-                );
-              })}
-
-              {!user ? (
-                <Link
-                  to="/login"
-                  className="px-4 py-2 rounded-xl text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-300 flex items-center"
-                >
-                  <LogIn className="w-4 h-4 mr-1" />
-                  Login / Sign Up
-                </Link>
-              ) : (
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center px-4 py-2 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-all duration-300"
-                >
-                  <LogOut className="w-4 h-4 mr-1" />
-                  Logout
-                </button>
-              )}
-            </div>
-
-            {/* Mobile Menu Toggle */}
+        {/* New Entry Form */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4">New Entry</h2>
+          <form onSubmit={handleSubmit}>
+            <textarea
+              value={newEntry}
+              onChange={(e) => setNewEntry(e.target.value)}
+              placeholder="Write your thoughts here..."
+              className="w-full h-40 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none resize-none"
+              required
+            />
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+              type="submit"
+              disabled={loading}
+              className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50"
             >
-              {mobileMenuOpen ? <X /> : <Menu />}
+              {loading ? "Saving..." : "Save Entry"}
             </button>
-          </div>
+          </form>
+        </div>
 
-          {/* Mobile Navigation */}
-          {mobileMenuOpen && (
-            <div className="md:hidden mt-2 pb-4 space-y-2">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center space-x-2 px-3 py-2 rounded-xl text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-300"
-                  >
-                    <Icon className="h-4 w-4" />
-                    <span>{item.name}</span>
-                  </Link>
-                );
-              })}
-
-              {!user ? (
-                <Link
-                  to="/login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full text-center px-4 py-2 rounded-xl text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 transition-all duration-300"
-                >
-                  Login / Sign Up
-                </Link>
-              ) : (
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="block w-full text-center px-4 py-2 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-all duration-300"
-                >
-                  Logout
-                </button>
-              )}
+        {/* Journal Entries */}
+        <div className="space-y-4">
+          <h2 className="text-2xl font-semibold text-gray-700 mb-4">Past Entries</h2>
+          {entries.length === 0 ? (
+            <div className="bg-white rounded-2xl shadow-lg p-8 text-center text-gray-500">
+              No journal entries yet
             </div>
+          ) : (
+            entries.map((entry) => (
+              <div key={entry._id || entry.id} className="bg-white rounded-2xl shadow-lg p-6">
+                <p className="text-sm text-gray-500 mb-2">
+                  {new Date(entry.createdAt || entry.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
+                <p className="text-gray-700 whitespace-pre-wrap">{entry.content}</p>
+              </div>
+            ))
           )}
         </div>
-      </nav>
-
-      {/* Sticky Spacing Fix */}
-      <div className="h-16"></div>
-    </>
+      </div>
+    </div>
   );
+  
 }
+  

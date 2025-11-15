@@ -13,6 +13,7 @@ import {
   LogIn,
   Menu,
   X,
+  BookOpen
 } from "lucide-react";
 import { useState } from "react";
 
@@ -36,9 +37,9 @@ export default function NavigationBar() {
   const userNav = [
     { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
     { name: "Therapists", icon: Users, href: "/therapists" },
-    { name: "Log Mood", icon: Smile, href: "/mood" },
+    { name: "Log Mood", icon: Smile, href: "/logmood" },
     { name: "Chatbot", icon: MessageCircle, href: "/chatbot" },
-    { name: "Profile", icon: UserCog, href: "/profile" },
+    { name: "Journal", icon: BookOpen, href: "/journal" },
   ];
 
   const navItems = user ? userNav : guestNav;
