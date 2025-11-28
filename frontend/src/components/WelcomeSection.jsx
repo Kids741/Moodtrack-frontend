@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function WelcomeSection() {
   return (
-    <section className="text-center py-12">
+    <section className="text-center py-2">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-center mb-6">
           <Sparkles className="h-8 w-8 text-blue-600 mr-3" />
