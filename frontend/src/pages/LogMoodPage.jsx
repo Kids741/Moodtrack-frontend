@@ -1,20 +1,56 @@
 // src/pages/LogMood.jsx
 import { useState } from "react";
+import api from "@/utils/axios";
+
+const MOOD_OPTIONS = [
+  { emoji: "😊", value: "happy", label: "Happy" },
+  { emoji: "😐", value: "neutral", label: "Neutral" },
+  { emoji: "😢", value: "sad", label: "Sad" },
+  { emoji: "😡", value: "angry", label: "Angry" },
+  { emoji: "😴", value: "tired", label: "Tired" },
+];
 
 export default function LogMoodPage() {
   const [mood, setMood] = useState("");
   const [note, setNote] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus(null);
+
     if (!mood) {
-      alert("Please select your mood.");
+      setStatus({ type: "error", message: "Please select your mood." });
       return;
     }
-    console.log({ mood, note }); // later save to backend/db
-    alert("Mood logged successfully!");
-    setMood("");
-    setNote("");
+
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setStatus({ type: "error", message: "Please log in to save your mood." });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await api.post("/moods", {
+        mood,
+        note: note.trim() || undefined,
+      });
+
+      setStatus({ type: "success", message: "Mood logged successfully!" });
+      setMood("");
+      setNote("");
+    } catch (err) {
+      const message =
+        err.response?.data?.message ||
+        (err.response?.status === 401
+          ? "Your session expired. Please log in again."
+          : "We couldn't save your mood. Please try again.");
+      setStatus({ type: "error", message });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -31,16 +67,17 @@ export default function LogMoodPage() {
               How are you feeling?
             </label>
             <div className="flex justify-between">
-              {["😊", "😐", "😢", "😡", "😴"].map((emoji) => (
+              {MOOD_OPTIONS.map((option) => (
                 <button
-                  key={emoji}
+                  key={option.value}
                   type="button"
                   className={`text-3xl transition transform hover:scale-125 ${
-                    mood === emoji ? "ring-2 ring-blue-400 rounded-full" : ""
+                    mood === option.value ? "ring-2 ring-blue-400 rounded-full" : ""
                   }`}
-                  onClick={() => setMood(emoji)}
+                  onClick={() => setMood(option.value)}
+                  title={option.label}
                 >
-                  {emoji}
+                  {option.emoji}
                 </button>
               ))}
             </div>
@@ -60,12 +97,23 @@ export default function LogMoodPage() {
             />
           </div>
 
+          {status && (
+            <p
+              className={`text-sm text-center ${
+                status.type === "success" ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {status.message}
+            </p>
+          )}
+
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition"
+            className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition disabled:opacity-60 disabled:cursor-not-allowed"
+            disabled={loading}
           >
-            Save Mood
+            {loading ? "Saving..." : "Save Mood"}
           </button>
         </form>
       </div>

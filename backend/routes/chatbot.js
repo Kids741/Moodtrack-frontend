@@ -12,11 +12,11 @@ const router = express.Router();
 
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-const MODEL = process.env.OPENAI_MODEL || "gpt-4.1-mini";
+const MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
 const MAX_HISTORY = Number(process.env.MAX_HISTORY_MESSAGES || 8);
 
 
-// simple auth middleware (adapt to your existing middleware)
+// simple auth middleware 
 async function authMiddleware(req, res, next) {
 const auth = req.headers.authorization;
 if (!auth) return res.status(401).json({ error: "Missing auth" });
@@ -62,16 +62,52 @@ const recentMessages = await Message.find({ conversation: conversation._id })
   .limit(MAX_HISTORY)
   .lean();
 
-// Build a simple assistant response (replace with real OpenAI call when ready)
-const assistantContent = `Echo: ${text}`;
+// Build messages array for OpenAI
+const messages = [
+  {
+    role: "system",
+    content: "You are Buddy, a compassionate and empathetic mental health support assistant for MoodTrack. Your role is to provide emotional support, help users reflect on their feelings, and encourage healthy coping strategies. Be warm, understanding, and non-judgmental. If users express serious mental health concerns or suicidal thoughts, encourage them to seek professional help immediately."
+  },
+  ...recentMessages.map((msg) => ({
+    role: msg.role,
+    content: msg.content
+  })),
+  {
+    role: "user",
+    content: text
+  }
+];
+
+if (!process.env.OPENAI_API_KEY) {
+  console.error("OpenAI API key is missing");
+  return res.status(500).json({ error: "OpenAI API key is not configured" });
+}
+
+let assistantContent = "";
+try {
+  const completion = await client.chat.completions.create({
+    model: MODEL,
+    messages,
+    temperature: 0.7,
+    max_tokens: 500
+  });
+
+  assistantContent = completion?.choices?.[0]?.message?.content?.trim() || "I'm sorry, I wasn't able to generate a response.";
+} catch (openAiError) {
+  console.error("OpenAI API error:", openAiError);
+  const errorMessage = openAiError?.response?.data?.error?.message || openAiError.message || "Failed to contact assistant";
+  return res.status(502).json({ error: errorMessage });
+}
+
+// Save assistant message to database
 const assistantMessage = await Message.create({
-conversation: conversation._id,
-role: "assistant",
-content: assistantContent,
+  conversation: conversation._id,
+  role: "assistant",
+  content: assistantContent,
 });
 
 // return the assistant message and conversation id
-return res.json({ message: assistantMessage, conversationId: conversation._id });
+return res.json({ reply: assistantContent, conversationId: conversation._id });
 } catch (err) {
 console.error(err);
 return res.status(500).json({ error: "Server error" });

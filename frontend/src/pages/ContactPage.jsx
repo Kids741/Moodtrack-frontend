@@ -20,7 +20,7 @@ export default function ContactPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //  Your EmailJS credentials
+    //  EmailJS credentials
     const serviceID = "service_qs18qp4";
     const adminTemplateID = "template_3lncctm"; // Template for admin notification
     const userTemplateID = "template_xv6krid"; // Template for auto-reply to sender
