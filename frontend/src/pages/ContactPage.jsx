@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import emailjs from "emailjs-com";
 import toast, { Toaster } from "react-hot-toast";
+import api from "@/utils/axios";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -8,6 +8,7 @@ export default function ContactPage() {
     email: "",
     message: "",
   });
+  const [isSending, setIsSending] = useState(false);
 
   React.useEffect(() => {
     document.title = "Contact | MoodTrack";
@@ -20,33 +21,41 @@ export default function ContactPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //  EmailJS credentials
-    const serviceID = "service_qs18qp4";
-    const adminTemplateID = "template_3lncctm"; // Template for admin notification
-    const userTemplateID = "template_xv6krid"; // Template for auto-reply to sender
-    const userID = "YcCXS07QM_O2pZ5B4";
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedMessage = formData.message.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      toast.error("Please fill in all fields before sending.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    setIsSending(true);
 
     try {
-      // 1 Send email to admin 
-      await emailjs.send(serviceID, adminTemplateID, formData, userID);
-
-      // 2 Send acknowledgment email to the user
-      await emailjs.send(
-        serviceID,
-        userTemplateID,
-        {
-          to_name: formData.name,
-          to_email: formData.email,
-        },
-        userID
-      );
+      await api.post("/contact", {
+        name: trimmedName,
+        email: trimmedEmail,
+        message: trimmedMessage,
+      });
 
       toast.success("Message sent successfully!");
       setFormData({ name: "", email: "", message: "" });
     } catch (error) {
-      console.error("Email error:", error);
-      toast.error("Oops! Something went wrong. Please try again.");
+      console.error("Contact form error:", error);
+      const friendlyMessage =
+        error?.response?.data?.message ||
+        error?.message ||
+        "Oops Something went wrong. Please try again.";
+      toast.error(friendlyMessage);
     }
+    setIsSending(false);
   };
 
   return (
@@ -58,8 +67,8 @@ export default function ContactPage() {
         </h2>
 
         <p className="text-center text-gray-600 mb-8">
-          We'd love to hear from you! Whether you have a question, feedback
-              drop us a message below.
+          We'd love to hear from you,
+          kindly drop us a message or feedback below.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -110,9 +119,10 @@ export default function ContactPage() {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg hover:bg-indigo-700 transition-colors duration-200"
+            disabled={isSending}
+            className="w-full bg-indigo-600 text-white font-semibold py-2 rounded-lg hover:bg-indigo-700 transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Send Message
+            {isSending ? "Sending..." : "Send Message"}
           </button>
         </form>
 

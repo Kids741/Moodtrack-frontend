@@ -7,6 +7,7 @@ import moodRoutes from "./routes/moodRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import chatbotRoutes from "./routes/chatbot.js";
 import journalRoutes from "./routes/journalRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
 
 // Only load .env in development
 if (process.env.NODE_ENV !== 'production') {
@@ -74,6 +75,7 @@ app.use("/api/moods", moodRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatbotRoutes);
 app.use("/api/journal", journalRoutes);
+app.use("/api/contact", contactRoutes);
 
 // === Root Endpoint ===
 app.get("/", (req, res) => {
