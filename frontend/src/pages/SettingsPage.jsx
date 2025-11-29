@@ -227,7 +227,7 @@ const SettingsPage = () => {
               Account
             </h2>
             <div className="grid md:grid-cols-2 gap-4 pt-4">
-              <Link to="/flower-garden" className="group bg-gradient-to-r from-pink-200 to-rose-300 text-white py-4 px-6 rounded-2xl font-semibold hover:shadow-2xl hover:scale-[1.02] transition-all flex items-center justify-center gap-3">
+              <Link to="/flower" className="group bg-gradient-to-r from-pink-200 to-rose-300 text-white py-4 px-6 rounded-2xl font-semibold hover:shadow-2xl hover:scale-[1.02] transition-all flex items-center justify-center gap-3">
                 <Flower className="w-6 h-6 group-hover:scale-110 transition-transform" />
                 Flower Garden
               </Link>
