@@ -314,7 +314,7 @@ function Dashboard() {
                 <Headphones className="w-10 h-10 mx-auto mb-3 opacity-90 group-hover:scale-110 transition-transform" />
                 <p className="font-semibold text-lg">Therapist</p>
               </Link>
-              <Link to="/Flower" className="group relative bg-gradient-to-br from-orange-200 to-rose-300 text-white p-6 rounded-2xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center hover:orange-500">
+                <Link to="/flower" className="group relative bg-gradient-to-br from-pink-200 to-rose-300 text-white p-6 rounded-2xl hover:shadow-2xl hover:scale-105 transition-all duration-300 text-center hover:orange-500">
                 <Flower className="w-10 h-10 mx-auto mb-3 opacity-90 group-hover:scale-110 transition-transform" />
                 <p className="font-semibold text-lg">Send Flower</p>
               </Link>
@@ -377,19 +377,19 @@ function Dashboard() {
             {/* Preferences */}
             <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-2xl border border-white/50">
               <h4 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <Settings className="w-6 h-6 text-purple-500" />
+                <Settings className="w-6 h-6 text-blue-500" />
                 Preferences
               </h4>
               <div className="space-y-3 text-sm">
                 <label className="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
-                  <input type="checkbox" className="w-4 h-4 text-purple-600 rounded" defaultChecked />
+                  <input type="checkbox" className="w-4 h-4 text-blue-600 rounded" defaultChecked />
                   <span>Daily Reminders</span>
                 </label>
                 <label className="flex items-center gap-3 p-3 bg-white rounded-xl cursor-pointer hover:bg-gray-50 transition-colors">
-                  <input type="checkbox" className="w-4 h-4 text-purple-600 rounded" />
+                  <input type="checkbox" className="w-4 h-4 text-blue-600 rounded" />
                   <span>Weekly Reports</span>
                 </label>
-                <Link to="/settings" className="block w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-3 px-4 rounded-xl text-center font-semibold hover:shadow-lg transition-all duration-300">
+                <Link to="/settings" className="block w-full bg-gradient-to-r from-blue-400 to-indigo-500 text-white py-3 px-4 rounded-xl text-center font-semibold hover:shadow-lg transition-all duration-300">
                   Full Settings
                 </Link>
               </div>

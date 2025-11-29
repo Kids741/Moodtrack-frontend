@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
-import api from "@/utils/axios" // axios instance you made
+import api from "@/utils/axios" // axios instance made
 
 export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" })

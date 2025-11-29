@@ -48,7 +48,7 @@ export default function ChatbotPage() {
 
   return (
 	<div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow p-4">
-	  <div className="text-xl font-semibold mb-2">Buddy</div>
+	  <div className="text-xl font-semi-bold-circular mb-2">Buddy AI</div>
 
 	  <div className="h-64 overflow-y-auto p-2 border rounded-lg mb-3 bg-gray-50 dark:bg-gray-900">
 		{messages.map((m, i) => (
