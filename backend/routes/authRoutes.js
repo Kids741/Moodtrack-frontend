@@ -1,12 +1,25 @@
 import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import rateLimit from "express-rate-limit"; 
 import User from "../models/User.js";
+import { validateRegister, validateLogin } from "../controllers/authController.js";
 
 const router = express.Router();
 
-// Register a new user
-router.post("/register", async (req, res) => {
+// Rate limiter for login - 5 attempts per 15 minutes per IP
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // limit each IP to 5 requests per windowMs
+  message: {
+    message: "Too many login attempts from this IP, please try again after 15 minutes."
+  },
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+// Register a new user with validation
+router.post("/register", validateRegister, async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -25,7 +38,7 @@ router.post("/register", async (req, res) => {
     const token = jwt.sign(
       { id: newUser._id },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: "60m" }
     );
 
     res.status(201).json({ 
@@ -42,8 +55,8 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login user
-router.post("/login", async (req, res) => {
+// Login user WITH rate limiting and validation
+router.post("/login", validateLogin, loginLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -56,7 +69,7 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(
       { id: user._id },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: "60m" }
     );
 
     res.json({

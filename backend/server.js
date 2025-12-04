@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-
+import helmet from "helmet";
 import moodRoutes from "./routes/moodRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import chatbotRoutes from "./routes/chatbot.js";
@@ -67,6 +67,7 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200
 };
+app.use(helmet());
 app.use(cors(corsOptions));
 app.use(express.json());
 

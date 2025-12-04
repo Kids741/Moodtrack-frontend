@@ -29,7 +29,13 @@ export default function SignupPage() {
         window.location.href = "/dashboard"
       }, 1500)
     } catch (err) {
-      setMessage(err.response?.data?.message || "Registration failed")
+      // Handle validation errors from express-validator
+      if (err.response?.data?.errors && Array.isArray(err.response.data.errors)) {
+        const errorMessages = err.response.data.errors.map(e => e.msg).join(". ");
+        setMessage(errorMessages);
+      } else {
+        setMessage(err.response?.data?.message || "Registration failed");
+      }
     } finally {
       setLoading(false)
     }

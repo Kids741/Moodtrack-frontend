@@ -85,7 +85,7 @@ export default function NavigationBar() {
               ) : (
                 <button
                   onClick={handleLogout}
-                  className="flex items-center px-4 py-2 rounded-xl text-sm font-medium text-white bg-blue-500s hover:bg-red-600 transition-all duration-300"
+                  className="flex items-center px-4 py-2 rounded-xl text-sm font-medium text-white bg-red-500 hover:bg-red-600 transition-all duration-300"
                 >
                   <LogOut className="w-4 h-4 mr-1" />
                   Logout
