@@ -18,6 +18,7 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import FlowerPage from "./pages/Flower.jsx";
+import FAQPage from "./pages/FAQPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import { ErrorPage } from "./components/ErrorBoundary.jsx";
 
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
       { path: "/therapists", element: <Therapists /> },
       { path: "/flower", element: <FlowerPage /> },
       { path: "/contact", element: <ContactPage /> },
+      { path: "/faq", element: <FAQPage /> },
       { path: "/dashboard", element: <Dashboard /> },
       { path: "*", element: <NotFoundPage /> },
     ],

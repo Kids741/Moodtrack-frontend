@@ -25,7 +25,7 @@ const About = () => {
         </h2>
         <p className="text-gray-700 leading-relaxed">
           At Moodtrack, our mission is to empower individuals to take charge of their emotional and mental health. 
-          We believe that awareness is the first step toward healing — our tools make it simple and intuitive 
+          We believe that awareness is the first step toward healing; our tools make it simple and intuitive 
           to monitor your emotions and identify patterns that influence your daily life.
         </p>
       </section>
@@ -54,7 +54,7 @@ const About = () => {
             <Shield className="mx-auto text-green-500 mb-3" size={36} />
             <h3 className="font-semibold text-lg mb-2">Privacy & Security</h3>
             <p className="text-gray-600 text-sm">
-              Your data is encrypted and stored securely — only you have access.
+              Your data is encrypted and stored securely only you have access.
             </p>
           </div>
           <div className="bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-lg transition">
@@ -78,13 +78,6 @@ const About = () => {
           emotional health care accessible to everyone.
         </p>
       </section>
-
-      {/* Footer */}
-      <footer className="text-center text-gray-500 text-sm mt-12">
-        <p>
-          &copy; {new Date().getFullYear()} <span className="font-semibold text-indigo-500">Moodtrack</span>. All rights reserved.
-        </p>
-      </footer>
     </div>
   );
 };
