@@ -95,7 +95,7 @@ const SettingsPage = () => {
             </div>
           </div>
           <div className="grid md:grid-cols-2 gap-4">
-            <Link to="/profile" className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 px-6 rounded-2xl font-semibold hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2">
+            <Link to="#" className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-3 px-6 rounded-2xl font-semibold hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2">
               Edit Profile
             </Link>
             <button className="border-2 border-indigo-200 dark:border-indigo-700 text-indigo-600 dark:text-indigo-400 py-3 px-6 rounded-2xl font-semibold hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition-all">
