@@ -21,7 +21,7 @@ export default function MoodTrendGraph() {
           <XAxis dataKey="day" />
           <YAxis domain={[1, 5]} />
           <Tooltip />
-          <Line type="monotone" dataKey="mood" stroke="#6366F1" strokeWidth={3} dot={{ r: 5 }} />
+          <Line type="monotone" dataKey="mood" stroke="#60A5FA" strokeWidth={3} dot={{ r: 5 }} />
         </LineChart>
       </ResponsiveContainer>
     </div>

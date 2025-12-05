@@ -246,12 +246,12 @@ function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600 mb-1">This Week</p>
-                <p className="text-3xl font-bold text-indigo-600">{weeklyMoodTotal}</p>
+                <p className="text-3xl font-bold text-blue-400">{weeklyMoodTotal}</p>
                 <p className="text-sm text-green-600 font-medium">
                   Mood entries logged in the last 7 days
                 </p>
               </div>
-              <Heart className="w-12 h-12 text-indigo-500 opacity-75" />
+              <Heart className="w-12 h-12 text-blue-400 opacity-75" />
             </div>
           </div>
           <div className="bg-white/80 backdrop-blur-xl rounded-2xl p-8 shadow-xl border border-white/50 hover:shadow-2xl transition-all duration-300">
@@ -274,10 +274,10 @@ function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600 mb-1">All-Time Logs</p>
-                <p className="text-3xl font-bold text-purple-600">{totalMoodsLogged}</p>
+                <p className="text-3xl font-bold text-blue-500">{totalMoodsLogged}</p>
                 <p className="text-sm text-blue-600 font-medium">Total moods saved to date</p>
               </div>
-              <Activity className="w-12 h-12 text-purple-500 opacity-75" />
+              <Activity className="w-12 h-12 text-blue-400 opacity-75" />
             </div>
           </div>
         </div>
@@ -288,7 +288,7 @@ function Dashboard() {
             {/* Weekly Mood Trends */}
             <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/50">
               <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                <Activity className="w-8 h-8 text-indigo-500" />
+                <Activity className="w-8 h-8 text-blue-400" />
                 Weekly Mood Overview
               </h3>
               {moodError ? (

@@ -64,14 +64,14 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-blue-950 dark:via-blue-900 dark:to-indigo-950 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <Link to="/dashboard" className="inline-flex items-center gap-2 text-blue-500 hover:text-indigo-700 dark:text-indigo-400 mb-6 p-3 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm rounded-2xl hover:shadow-lg transition-all">
+          <Link to="/dashboard" className="inline-flex items-center gap-2 text-blue-500 hover:text-indigo-700 dark:text-blue-300 mb-6 p-3 bg-white/50 dark:bg-blue-800/40 backdrop-blur-sm rounded-2xl hover:shadow-lg transition-all">
             <Settings className="w-6 h-6" />
           </Link>
-          <h1 className="text-4xl lg:text-5xl font-bold text-blue-600 dark:text-blue-200 mb-4">
+          <h1 className="text-4xl lg:text-5xl font-bold text-blue-600 dark:text-blue-300 mb-4">
             Settings
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-lg mx-auto leading-relaxed">
@@ -80,12 +80,12 @@ const SettingsPage = () => {
         </div>
 
         {/* Profile Section */}
-        <div className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/50 dark:border-slate-700/50 mb-8">
+        <div className="bg-white/70 dark:bg-blue-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/50 dark:border-blue-700/50 mb-8">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-3">
             <User className="w-8 h-8 text-blue-600" />
             Profile
           </h2>
-          <div className="flex items-center gap-6 mb-6 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-slate-800/50 dark:to-indigo-900/50 rounded-2xl">
+          <div className="flex items-center gap-6 mb-6 p-4 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-blue-800/30 dark:to-indigo-800/30 rounded-2xl">
             <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-3xl flex items-center justify-center text-3xl font-bold shadow-2xl">
               {user?.name?.[0]?.toUpperCase() || "M"}
             </div>
@@ -106,7 +106,7 @@ const SettingsPage = () => {
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Notifications */}
-          <div className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/50 dark:border-slate-700/50">
+          <div className="bg-white/70 dark:bg-blue-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/50 dark:border-blue-700/50">
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-3">
               <Bell className="w-8 h-8 text-orange-500" />
               Notifications
@@ -152,16 +152,16 @@ const SettingsPage = () => {
           </div>
 
           {/* Appearance & Theme */}
-          <div className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/50 dark:border-slate-700/50">
+          <div className="bg-white/70 dark:bg-blue-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/50 dark:border-blue-700/50">
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-3">
               <Palette className="w-8 h-8 text-blue-400" />
               Appearance
             </h2>
             <div className="space-y-4">
-              <label className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-blue-30 to-indigo-40 dark:from-purple-900/20 hover:bg-purple-100 dark:hover:bg-purple-800/30 transition-all cursor-pointer group">
+              <label className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-800/40 dark:to-indigo-800/40 hover:bg-purple-100 dark:hover:bg-blue-700/50 transition-all cursor-pointer group">
                 <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-2xl p-3 shadow-lg transition-all ${theme === 'dark' ? 'bg-slate-800 ring-2 ring-blue-300' : 'bg-white ring-2 ring-purple-200'}`}>
-                    {theme === 'dark' ? <Moon className="w-6 h-6 text-indigo-300" /> : <Sun className="w-6 h-6 text-yellow-500" />}
+                  <div className={`w-12 h-12 rounded-2xl p-3 shadow-lg transition-all ${theme === 'dark' ? 'bg-blue-800 ring-2 ring-blue-400' : 'bg-white ring-2 ring-purple-200'}`}>
+                    {theme === 'dark' ? <Moon className="w-6 h-6 text-blue-300" /> : <Sun className="w-6 h-6 text-yellow-500" />}
                   </div>
                   <div>
                     <div className="font-semibold text-gray-800 dark:text-white">Dark Mode</div>
@@ -170,7 +170,7 @@ const SettingsPage = () => {
                 </div>
                 <button
                   onClick={handleThemeToggle}
-                  className="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-2xl font-bold hover:shadow-lg hover:scale-105 transition-all shadow-md"
+                  className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl font-bold hover:shadow-lg hover:scale-105 transition-all shadow-md"
                 >
                   {theme === 'dark' ? '☀️' : '🌙'}
                 </button>
@@ -191,13 +191,13 @@ const SettingsPage = () => {
 
         {/* Privacy & Preferences */}
         <div className="space-y-8 py-4">
-          <div className="bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/50 dark:border-slate-700/50">
+          <div className="bg-white/70 dark:bg-blue-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/50 dark:border-blue-700/50">
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-3">
               <Shield className="w-8 h-8 text-blue-500" />
               Privacy
             </h2>
             <div className="space-y-4 text-sm">
-              <label className="flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-800/30 transition-all cursor-pointer">
+              <label className="flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-800/30 dark:to-indigo-800/30 hover:bg-blue-100 dark:hover:bg-blue-700/40 transition-all cursor-pointer">
                 <input
                   type="checkbox"
                   checked={privacy.dataSharing}
@@ -211,7 +211,7 @@ const SettingsPage = () => {
                 <select
                   value={privacy.moodHistory}
                   onChange={(e) => setPrivacy(prev => ({...prev, moodHistory: e.target.value}))}
-                  className="w-full p-3 border border-gray-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700 focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 transition-all"
+                  className="w-full p-3 border border-gray-200 dark:border-blue-700 rounded-xl bg-white dark:bg-blue-800/50 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 transition-all"
                 >
                   <option value="private">Only me</option>
                   <option value="friends">Friends only</option>
@@ -221,7 +221,7 @@ const SettingsPage = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-r from-rose-50 to-pink-50 dark:from-rose-900/20 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-rose-200/50 dark:border-rose-800/50">
+          <div className="bg-gradient-to-r from-rose-50 to-pink-50 dark:from-blue-900/40 dark:to-indigo-900/40 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-rose-200/50 dark:border-blue-700/50">
             <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-3">
               <LogOut className="w-8 h-8 text-slate-500" />
               Account

@@ -10,8 +10,8 @@ const About = () => {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-50 text-gray-800 px-6 py-10">
       {/* Header Section */}
       <header className="max-w-3xl mx-auto text-center mb-10">
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-indigo-700 mb-3">
-          About <span className="text-indigo-500">Moodtrack</span>
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-blue-400 mb-3">
+          About Moodtrack
         </h1>
         <p className="text-gray-600 text-lg">
           Moodtrack is a modern mental health web app that helps you understand and manage your emotional well-being through insightful tracking and reflection.
